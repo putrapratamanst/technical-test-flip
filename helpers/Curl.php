@@ -101,8 +101,8 @@ class Curl
         $ch = curl_init();
 
         $url = $this->url;
-        if (!empty($this->q)) {
-            $url .= "/" . $this->q;
+        if (!empty($this->queryParams)) {
+            $url .= "/" . $this->queryParams;
         }
 
         if (!empty($body)) {

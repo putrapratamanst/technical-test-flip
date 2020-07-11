@@ -21,7 +21,7 @@ class DisburseController
 
     public function create(Request $request)
     {
-        $response       = new BaseResponse();
+        // $response       = new BaseResponse();
         $model          = new DisburseModel();
         $params         = $model->reformatBody($request->getBody());
         $createDisburse = DisburseService::create($params, $model);
@@ -36,9 +36,19 @@ class DisburseController
         $response     = new BaseResponse();
         $params       = $request->getBody();
 
-        $disburseList = DisburseService::list($params);
+        $disburseList = DisburseService::list();
         $response->withData($disburseList);
         return $response->send();
     }
 
+    public function update(Request $request)
+    {
+        // $response       = new BaseResponse();
+        $model          = new DisburseModel();
+        $params         = $request->getBody();
+        $updateDisbursed = DisburseService::update($params, $model);
+        header('Location: /');
+        // $response->withData($createDisburse);
+        // return $response->send();        
+    }
 }
