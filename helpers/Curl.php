@@ -82,7 +82,6 @@ class Curl
         }
 
         Log::info($result);
-
         $this->setResponse($result);
     }
 
@@ -117,9 +116,9 @@ class Curl
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 400);
 
-        $server_output = curl_exec($ch);
-        Log::info($server_output);
-        return $server_output;
+        $serverOutput = curl_exec($ch);
+        Log::info($serverOutput);
+        return $serverOutput;
     }
 
     private function post($headers = [], $body = [])
@@ -147,9 +146,9 @@ class Curl
 
         curl_setopt($ch, CURLOPT_TIMEOUT, 400);
 
-        $server_output = curl_exec($ch);
+        $serverOutput = curl_exec($ch);
 
-        return $server_output;
+        return $serverOutput;
     }
 
     private function patch($headers = [], $body = [])
@@ -177,13 +176,13 @@ class Curl
 
         curl_setopt($ch, CURLOPT_TIMEOUT, 400);
 
-        $server_output = curl_exec($ch);
+        $serverOutput = curl_exec($ch);
 
-        return $server_output;
+        return $serverOutput;
     }
 
     protected function setResponse($result)
     {
-        $this->response = $result;
+        $this->response =json_decode($result);
     }
 }

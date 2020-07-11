@@ -52,6 +52,7 @@ $sql = "CREATE TABLE IF NOT EXISTS $table (
         remark TEXT DEFAULT NULL,   
         receipt TEXT DEFAULT NULL,
         time_served DATETIME DEFAULT NULL,
+        timestamp DATETIME DEFAULT NULL,
         fee DECIMAL(20,2) DEFAULT NULL,
         third_party VARCHAR(255) DEFAULT NULL,
         request_raw TEXT DEFAULT NULL,

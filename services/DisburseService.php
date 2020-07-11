@@ -48,9 +48,9 @@ class DisburseService extends BaseService
             );
         }
 
-        $requestBody = serialize($params);
+        $requestBody  = serialize($params);
         $responseBody = serialize($data);
-
+        // die(json_encode($data));
         $createDisburse = $model->createDisburse($data, $requestBody, $responseBody);
 
         if (empty($createDisburse)) {
@@ -62,6 +62,21 @@ class DisburseService extends BaseService
         }
 
         return $createDisburse;
-
     }
+
+    public static function list($params)
+    {
+        $status = $params['status'] ?? "";
+
+        $disburse = new DisburseModel();
+
+        if (empty($status)) {
+            $listDisburse = $disburse->findAllDisburseData();
+        } else {
+            $listDisburse = $disburse->findAllDisburseDataByStatus($status);
+        }
+
+        return $listDisburse;
+    }
+
 }
