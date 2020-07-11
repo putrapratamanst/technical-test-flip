@@ -1,0 +1,5 @@
+[2020-07-11 23:04:33] Error : utils\exceptions\BaseException: 404 resource not found in /home/putra/Documents/JOJONOMIC/CODE/technical-test-flip/utils/Router.php:44
+Stack trace:
+#0 /home/putra/Documents/JOJONOMIC/CODE/technical-test-flip/routes/web.php(13): utils\Router::run()
+#1 /home/putra/Documents/JOJONOMIC/CODE/technical-test-flip/web/index.php(7): require('/home/putra/Doc...')
+#2 {main}

@@ -1,6 +1,6 @@
 <?php
 
-namespace helpers\Constants;
+namespace helpers\constants;
 
 class HttpConstant {
 
