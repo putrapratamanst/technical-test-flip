@@ -59,8 +59,7 @@ class Router
             }
 
             $getCurrentFunction = self::$availableRoutes[$getPath][$method];
-            $a = self::execFunction($getCurrentFunction);
-            die(json_encode($a));
+            self::executeFunction($getCurrentFunction);
             return;
         } catch (BaseException $e) {
             Log::error($e);
@@ -68,7 +67,7 @@ class Router
         }
     }
 
-    private static function execFunction($function)
+    private static function executeFunction($function)
     {
         $extractFunction = self::extractFunction($function);
         $controller      = new $extractFunction['controller']();

@@ -6,8 +6,8 @@ use utils\Router;
 $router = new Router();
 
 $router->get('/', "DisburseController@index");
-$router->post('/disburse', "DisburseController@index");
-$router->patch('/disburse', "DisburseController@index");
-$router->get('/list', "DisburseController@index");
+$router->post('/disburse', "DisburseController@create");
+$router->patch('/disburse', "DisburseController@update");
+$router->get('/list', "DisburseController@list");
 
 $router->run();

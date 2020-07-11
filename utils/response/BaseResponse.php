@@ -2,8 +2,8 @@
 
 namespace utils\response;
 
-use helpers\Constants\ErrorConstant;
-use helpers\Constants\MessageConstant;
+use helpers\constants\ErrorConstant;
+use helpers\constants\MessageConstant;
 
 class BaseResponse
 {
@@ -96,7 +96,7 @@ class BaseResponse
     public function view()
     {
         $view = "";
-
+        
         if (file_exists($this->view)) {
             $view = include $this->view;
         } else {
