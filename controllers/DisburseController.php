@@ -21,10 +21,10 @@ class DisburseController
 
     public function create(Request $request)
     {
-        $response = new BaseResponse();
-        $model    = new DisburseModel();
-        $params   = $model->reformatBody($request->getBody());
-        $disburse_created = DisburseService::create($params);
+        $response       = new BaseResponse();
+        $model          = new DisburseModel();
+        $params         = $model->reformatBody($request->getBody());
+        $createDisburse = DisburseService::create($params, $model);
 
         $response->withData($disburse_created);
         $response->withDataTransformer(new DisburseTransformer());

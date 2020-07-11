@@ -26,4 +26,13 @@ if (!function_exists('config')) {
 
         return $config[$key];
     }
+
+
+if(!function_exists('env')) {
+
+        function env($key, $default = null)
+        {
+            return $_ENV[$key] ?? $default;;
+        }
+    }
 }

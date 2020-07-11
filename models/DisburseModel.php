@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 namespace models;
 
-class DisburseModel {
+class DisburseModel extends BaseDatabaseModel {
+{
 
     public function reformatBody($body)
     {
@@ -15,5 +16,4 @@ class DisburseModel {
 
         return $newBody;
     }
-
 }
