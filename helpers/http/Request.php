@@ -20,7 +20,7 @@ class Request
         $input = $_POST;
 
         if ($input) {
-            $this->body = json_decode($input, true);
+            $this->body = $input;
         }
 
         $this->body = array_merge($this->body, $_REQUEST);
@@ -33,11 +33,6 @@ class Request
 
     public function getBody()
     {
-        return $this->body;
-    }
-
-    public function getHeaders()
-    {
-        return $this->headers;
+         return $this->body;
     }
 }

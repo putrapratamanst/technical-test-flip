@@ -13,8 +13,7 @@
         }
 
         input[type=text],
-        select,
-        textarea {
+        input[type=number] {
             width: 100%;
             padding: 12px;
             border: 1px solid #ccc;
@@ -75,15 +74,15 @@
             <input type="text" id="bank_code" name="bank_code" required>
 
             <label for="account_number">Account Number</label>
-            <input type="text" id="account_number" name="account_number" required>
+            <input type="number" id="account_number" name="account_number" required>
 
             <label for="amount">Amount</label>
-            <input type="text" id="amount" name="amount" required>
+            <input type="number" id="amount" name="amount" min="0" required>
 
             <label for="remark">Remark</label>
             <input type="text" id="remark" name="remark" required>
 
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" onclick="getInput()">
         </form>
     </div>
 
@@ -128,3 +127,11 @@
 </body>
 
 </html>
+<script>
+    function getInput() {
+        var input = document.getElementById("account_number").value;
+        // conversion from string to integer
+        if (isNaN(input)) return 0; // value is not a number
+        var value = parseInt(input);
+    }
+</script>

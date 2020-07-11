@@ -54,8 +54,8 @@ $sql = "CREATE TABLE IF NOT EXISTS $table (
         time_served DATETIME DEFAULT NULL,
         fee DECIMAL(20,2) DEFAULT NULL,
         third_party VARCHAR(255) DEFAULT NULL,
-        request TEXT DEFAULT NULL,
-        response TEXT DEFAULT NULL,
+        request_raw TEXT DEFAULT NULL,
+        response_raw TEXT DEFAULT NULL,
         created_at DATETIME DEFAULT NULL,
         updated_at DATETIME DEFAULT NULL
     )";
