@@ -70,8 +70,6 @@ class DisburseModel extends BaseDatabaseModel
         )->get();
     }
 
-{
-
     public function reformatBody($body)
     {
         $newBody = [

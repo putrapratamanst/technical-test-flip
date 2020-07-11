@@ -40,7 +40,7 @@ class DisburseService extends BaseService
         $curl->callEndpoint();
         $data = $curl->respBody();
 
-        if (empty($data->id)) {
+        if (empty($data->id) || $data == NULL ) {
             throw new BaseException(
                 MessageConstant::MESSAGE_CREATE_FAILED,
                 ErrorConstant::ERROR_CODE_CREATE_FAILED,
@@ -66,16 +66,8 @@ class DisburseService extends BaseService
 
     public static function list($params)
     {
-        $status = $params['status'] ?? "";
-
         $disburse = new DisburseModel();
-
-        if (empty($status)) {
-            $listDisburse = $disburse->findAllDisburseData();
-        } else {
-            $listDisburse = $disburse->findAllDisburseDataByStatus($status);
-        }
-
+        $listDisburse = $disburse->findAllDisburseData();
         return $listDisburse;
     }
 

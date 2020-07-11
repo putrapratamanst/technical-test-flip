@@ -10,7 +10,7 @@ use utils\response\BaseResponse;
 class DisburseController
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $response = new BaseResponse();
         $form     = __DIR__ . "/../views/disburse/form.php";
@@ -25,9 +25,20 @@ class DisburseController
         $model          = new DisburseModel();
         $params         = $model->reformatBody($request->getBody());
         $createDisburse = DisburseService::create($params, $model);
+        header('Location: /');
+        // $response->withData($createDisburse);
+        // return $response->send();        
+    }
 
-        $response->withData($disburse_created);
-        $response->withDataTransformer(new DisburseTransformer());
+
+    public function list(Request $request)
+    {
+        $response     = new BaseResponse();
+        $params       = $request->getBody();
+
+        $disburseList = DisburseService::list($params);
+        $response->withData($disburseList);
         return $response->send();
     }
+
 }

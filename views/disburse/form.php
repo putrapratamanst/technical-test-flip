@@ -71,7 +71,7 @@
     <div class="container">
         <form action="disburse" method="POST">
             <label for="bank_code">Bank Code</label>
-            <input type="text" id="bank_code" name="bank_code" required>
+            <input type="text" id="bank_code" name="bank_code" maxlength="5" required>
 
             <label for="account_number">Account Number</label>
             <input type="number" id="account_number" name="account_number" required>
@@ -87,51 +87,26 @@
     </div>
 
 
-    <table>
+    <table id="table">
         <tr>
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
-        </tr>
-        <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-        </tr>
-        <tr>
-            <td>Ernst Handel</td>
-            <td>Roland Mendel</td>
-            <td>Austria</td>
-        </tr>
-        <tr>
-            <td>Island Trading</td>
-            <td>Helen Bennett</td>
-            <td>UK</td>
-        </tr>
-        <tr>
-            <td>Laughing Bacchus Winecellars</td>
-            <td>Yoshi Tannamuri</td>
-            <td>Canada</td>
-        </tr>
-        <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-            <td>Italy</td>
+            <th>REF ID</th>
+            <th>Bank Code</th>
+            <th>Account Number</th>
+            <th>Amount</th>
+            <th>Remark</th>
+            <th>Fee</th>
+            <th>Receipt</th>
+            <th>Time Served</th>
+            <th>Status</th>
         </tr>
     </table>
 </body>
 
 </html>
-<script>
-    function getInput() {
-        var input = document.getElementById("account_number").value;
-        // conversion from string to integer
-        if (isNaN(input)) return 0; // value is not a number
-        var value = parseInt(input);
-    }
-</script>
+<script src="/assets/js/ajax.js"></script>
+
+<?php
+if(isset($_POST) && !empty($_POST)){
+    die(json_encode($_POST));
+}
+?>
