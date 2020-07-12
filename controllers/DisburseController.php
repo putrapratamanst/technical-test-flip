@@ -31,11 +31,9 @@ class DisburseController
     }
 
 
-    public function list(Request $request)
+    public function list()
     {
         $response     = new BaseResponse();
-        $params       = $request->getBody();
-
         $disburseList = DisburseService::list();
         $response->withData($disburseList);
         return $response->send();
@@ -43,12 +41,11 @@ class DisburseController
 
     public function update(Request $request)
     {
-        // $response       = new BaseResponse();
+        $response       = new BaseResponse();
         $model          = new DisburseModel();
         $params         = $request->getBody();
         $updateDisbursed = DisburseService::update($params, $model);
-        header('Location: /');
-        // $response->withData($createDisburse);
-        // return $response->send();        
+        $response->withData($updateDisbursed);
+        return $response->send();        
     }
 }

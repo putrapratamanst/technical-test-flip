@@ -17,12 +17,10 @@ class Request
     {
         $this->body = [];
 
-        $input = $_POST;
-
+        $input = file_get_contents('php://input');
         if ($input) {
-            $this->body = $input;
+            $this->body = json_decode($input, true);
         }
-
         $this->body = array_merge($this->body, $_REQUEST);
     }
 

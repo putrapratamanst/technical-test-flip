@@ -29,7 +29,7 @@ class Curl
     }
 
     public function intialize($body = [])
-    {
+    {   
         $this->body = $body;
     }
 
@@ -71,7 +71,6 @@ class Curl
 
         Log::info(json_encode($headers));
         Log::info(json_encode($this->body));
-
         if ($this->method == "GET") {
             $result = $this->get($headers, $this->body);
         } else if ($this->method == "POST") {
@@ -123,7 +122,7 @@ class Curl
 
     private function post($headers = [], $body = [])
     {
-        $encoded_body = "";
+        $encodedBody = "";
 
         $ch = curl_init();
 
@@ -133,14 +132,14 @@ class Curl
 
         switch ($this->headers['Content-type']) {
             case 'application/json':
-                $encoded_body = json_encode($body);
+                $encodedBody = json_encode($body);
                 break;
             case 'application/x-www-form-urlencoded':
-                $encoded_body = http_build_query($body);
+                $encodedBody = http_build_query($body);
                 break;
         }
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_body);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedBody);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->ssl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -153,7 +152,7 @@ class Curl
 
     private function patch($headers = [], $body = [])
     {
-        $encoded_body = "";
+        $encodedBody = "";
 
         $ch = curl_init();
 
@@ -163,19 +162,19 @@ class Curl
 
         switch ($this->headers['Content-type']) {
             case 'application/json':
-                $encoded_body = json_encode($body);
+                $encodedBody = json_encode($body);
                 break;
             case 'application/x-www-form-urlencoded':
-                $encoded_body = http_build_query($body);
+                $encodedBody = http_build_query($body);
                 break;
         }
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded_body);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $encodedBody);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->ssl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         curl_setopt($ch, CURLOPT_TIMEOUT, 400);
-
+       
         $serverOutput = curl_exec($ch);
 
         return $serverOutput;

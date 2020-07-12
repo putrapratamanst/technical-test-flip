@@ -1,14 +1,16 @@
 <?php
 
-require_once __DIR__ . "/../helpers/Http/Curl/Client.php";
-require_once __DIR__ . "/../helpers/Log.php";
-require_once __DIR__ . "/../helpers/Constants/DisburseConstant.php";
-require_once __DIR__ . "/../helpers/Env.php";
-require_once __DIR__ . "/../helpers/Global.php";
+require(dirname(__DIR__) . "/../helpers/Curl.php");
+require(dirname(__DIR__) . "/../utils/Log.php");
+require(dirname(__DIR__) . "/../helpers/constants/DisburseConstant.php");
+require(dirname(__DIR__) . "/../utils/Env.php");
+require(dirname(__DIR__) . "/../utils/Global.php");
+require(dirname(__DIR__) . "/../helpers/constants/HttpConstant.php");
 
 date_default_timezone_set('Asia/Jakarta');
 
 use helpers\constants\DisburseConstant;
+use helpers\constants\HttpConstant;
 use helpers\Curl;
 use utils\Log;
 use utils\Env;
@@ -16,64 +18,63 @@ use utils\Env;
 Env::load();
 
 $today = Date("Y-m-d");
-$log_name = "scheduler-$today.log";
-$local_ip = env('LOCAL_IP', '');
-$local_port = env('LOCAL_PORT', '3005');
-$local_url = "$local_ip:$local_port";
+$logName = "scheduler-$today.log";
+$localIp = env('LOCAL_IP', '');
+$localPort = env('LOCAL_PORT', '3005');
+$localUrl = "$localIp:$localPort";
 
-Log::info("Scheduler starting....", $log_name);
-
-$client = new Curl($local_url, "/list", "GET");
+Log::info("Scheduler starting....", $logName);
+$client = new Curl($localUrl, "/list", HttpConstant::HTTP_METHOD_GET);
 $client->intialize(['status' => DisburseConstant::STATUS_PENDING]);
+
 $client->callEndpoint();
 
-$body = json_decode($client->respBody(), true);
+$body =$client->respBody();
 
 if (empty($body)) {
-    Log::info("Failed to get pending list", $log_name);
+    Log::info("Failed to get pending list", $logName);
     die();
 }
 
-if (!$body['success']) {
-    Log::info("Failed to get pending list. reason : " . $body['message'], $log_name);
+if (!$body->success) {
+    Log::info("Failed to get pending list. reason : " . $body->message, $logName);
     die();
 }
 
-if (empty($body['data'])) {
+if (empty($body->data)) {
     Log::info("Nothing is processed");
     die();
 }
 
-Log::info(count($body['data']) . " data will be processed", $log_name);
+Log::info(count($body->data) . " data will be processed", $logName);
 
-$client_update = new Curl($local_url, "/disburse", "PATCH");
+$clientUpdate = new Curl($localUrl, "/disburse", HttpConstant::HTTP_METHOD_PATCH);
 
-$list = $body['data'];
+$list = $body->data;
 
 foreach ($list as $data) {
-    $id = $data['id'];
+    $id = $data->id;
+    $clientUpdate->intialize(['id' => $id]);
+    $clientUpdate->callEndpoint();
 
-    $client->intialize(['id' => $id]);
-    $client->callEndpoint();
-    $body = json_decode($client->respBody(), true);
-
-    if (empty($body)) {
-        Log::info("ID #$id Failed to update status. ID #$id", $log_name);
+    $detail = $clientUpdate->respBody();
+    if (empty($detail)) {
+        Log::info("ID #$id Failed to update status. ID #$id", $logName);
     }
     
-    if (!$body['success']) {
-        Log::info("ID #$id Failed to update status. reason : " . $body['message'], $log_name);
+    if (!$detail->success) {
+        Log::info("ID #$id Failed to update status. reason : " . $detail->message, $logName);
     }
 
-    $status = $body['data']['status'] ?? DisburseConstant::STATUS_PENDING;
+    $status = $detail->data->status ?? DisburseConstant::STATUS_PENDING;
 
     if ($status != DisburseConstant::STATUS_PENDING) {
-        Log::info("ID #$id Updated status to $status. reason : " . $body['message'], $log_name);
+        Log::info("ID #$id Updated status to $status. reason : " . $detail->message, $logName);
     }
     else {
-        Log::info("ID #$id status still $status.", $log_name);
+        Log::info("ID #$id status still $status.", $logName);
     }
     
 }
 
-Log::info("Scheduler end....", $log_name);
+Log::info("Scheduler end....", $logName);
