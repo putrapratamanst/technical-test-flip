@@ -10,7 +10,7 @@ function __autoload($class_name)
     require_once __DIR__ . '/utils/exceptions/ExceptionHandler.php';
 
     if (file_exists($file)) {
-        require_once($file);
+        require_once ($file);
         return;
     }
 }
